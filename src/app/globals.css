@@ -36,11 +36,22 @@
 }
 
 @layer base {
+  :root {
+    --shrink: 0.625rem; /* cuánto se compacta el header al hacer scroll */
+  }
   html {
     background: var(--color-cream);
     color: var(--color-ink);
     -webkit-tap-highlight-color: transparent;
     scroll-padding-top: 9rem;
+  }
+  @media (min-width: 64rem) {
+    :root {
+      --shrink: 1.125rem;
+    }
+    html {
+      scroll-padding-top: 11rem;
+    }
   }
   body {
     font-family: var(--font-sans);
@@ -49,5 +60,41 @@
   :focus-visible {
     outline: 3px solid var(--color-coral-ink);
     outline-offset: 3px;
+  }
+}
+
+/* Header compacto: todo con transform/opacity, el alto real no cambia. */
+@layer components {
+  [data-header],
+  [data-header-row],
+  [data-logo],
+  #category-bar {
+    transition-property: translate, transform, opacity, visibility;
+    transition-duration: 0.4s;
+    transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  [data-logo] {
+    transform-origin: left center;
+  }
+  [data-header]::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 1px;
+    background: rgb(30 26 22 / 0.1);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  html[data-compact] :is([data-header], #category-bar) {
+    transform: translateY(calc(-1 * var(--shrink)));
+  }
+  html[data-compact] [data-header-row] {
+    transform: translateY(calc(var(--shrink) / 2));
+  }
+  html[data-compact] [data-logo] {
+    transform: scale(0.84);
+  }
+  html[data-compact] [data-header]::after {
+    opacity: 1;
   }
 }

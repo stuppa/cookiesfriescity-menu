@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { site } from '@/data/site'
 import { Doodle } from './brand/doodles'
 import { CloseIcon, MenuIcon } from './brand/icons'
@@ -10,11 +10,20 @@ import { Button, wrap } from './ui'
 export function Header() {
   const sheet = useRef<HTMLDivElement>(null)
 
+  // Header compacto en cuanto el sentinel del tope sale de pantalla (sin listener de scroll).
+  useEffect(() => {
+    const sentinel = document.getElementById('top-sentinel')
+    if (!sentinel) return
+    const io = new IntersectionObserver(([e]) => document.documentElement.toggleAttribute('data-compact', !e.isIntersecting))
+    io.observe(sentinel)
+    return () => io.disconnect()
+  }, [])
+
   return (
-    <header className="sticky top-0 z-40 bg-cream">
-      <div className={`${wrap} flex h-[4.5rem] items-center gap-3 lg:grid lg:h-24 lg:grid-cols-[1fr_auto_1fr]`}>
+    <header data-header className="sticky top-0 z-40 bg-cream">
+      <div data-header-row className={`${wrap} flex h-[4.5rem] items-center gap-3 lg:grid lg:h-24 lg:grid-cols-[1fr_auto_1fr]`}>
         <a href={site.nav[0].href} aria-label={`${site.name}, inicio`} className="mr-auto">
-          <Logo className="text-[1.55rem] lg:text-[2.05rem]" />
+          <Logo data-logo className="text-[1.55rem] lg:text-[2.05rem]" />
         </a>
 
         <nav aria-label="Principal" className="hidden lg:block">

@@ -8,6 +8,7 @@ import { MenuGrid } from '@/components/menu-grid'
 export default function Page() {
   return (
     <>
+      <span id="top-sentinel" aria-hidden="true" className="pointer-events-none absolute top-0 left-0 h-12 w-px" />
       <Header />
       <main className="overflow-x-clip">
         <Hero />
