@@ -1,0 +1,53 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+/* Tokens muestreados de docs/mockups. */
+@theme {
+  --color-cream: #f7f4e5;
+  --color-paper: #fbf9f0;
+  --color-ink: #1e1a16;
+  --color-ink-soft: #4f4842;
+  --color-coral: #fd7a50;
+  --color-coral-ink: #b33a16; /* coral para texto chico: AA sobre crema y pasteles */
+  --color-peach: #ffd6c6;
+  --color-pink: #fccadc;
+  --color-mint: #dceeba;
+  --color-lime: #e0eeb0;
+  --color-butter: #fde48f;
+  --color-sky: #c1e1f8;
+  --color-lilac: #e6d0f6;
+  --color-blush: #fbede7;
+
+  /* ⚑ Las variables --font-* las define next/font en src/app/layout.tsx */
+  --font-display: var(--font-grandstander), ui-rounded, system-ui, sans-serif;
+  --font-hand: var(--font-shantell), ui-rounded, system-ui, sans-serif;
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1.5rem;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Contenido hasta el borde de la ventana desde un contenedor centrado (82.5rem + padding 1.5rem). */
+@utility bleed-r {
+  margin-right: calc(-1 * max(1.5rem, (100vw - 82.5rem) / 2 + 1.5rem));
+}
+@utility bleed-l {
+  margin-left: calc(-1 * max(1.5rem, (100vw - 82.5rem) / 2 + 1.5rem));
+}
+
+@layer base {
+  html {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    -webkit-tap-highlight-color: transparent;
+    scroll-padding-top: 9rem;
+  }
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-coral-ink);
+    outline-offset: 3px;
+  }
+}
