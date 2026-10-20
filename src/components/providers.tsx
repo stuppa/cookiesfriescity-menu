@@ -49,3 +49,69 @@ export function Providers({ children }: { children: ReactNode }) {
     </LazyMotion>
   )
 }
+
+/**
+ * Reveals, loops y parallax. Va al final de la página (no en el layout) para que su efecto
+ * corra cuando la página ya hidrató y no toque el DOM antes que React.
+ */
+export function PageEffects() {
+  useEffect(() => {
+    if (prefersReducedMotion()) return
+
+    // Reveal: solo se oculta lo que arranca debajo del viewport, así nada parpadea al hidratar.
+    const reveal = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue
+          e.target.removeAttribute('data-pending')
+          e.target.setAttribute('data-inview', '')
+          reveal.unobserve(e.target)
+        }
+      },
+      { rootMargin: '0px 0px -10% 0px' },
+    )
+    document.querySelectorAll('[data-reveal]').forEach((el) => {
+      if (el.getBoundingClientRect().top <= innerHeight) return
+      el.setAttribute('data-pending', '')
+      reveal.observe(el)
+    })
+
+    // Loops (flotación, mascota, marquee…) en pausa fuera de pantalla.
+    const loops = new IntersectionObserver((entries) => {
+      for (const e of entries) e.target.toggleAttribute('data-paused', !e.isIntersecting)
+    })
+    document.querySelectorAll('[data-loop]').forEach((el) => loops.observe(el))
+
+    // Parallax ligado al scroll: data-parallax="6" mueve ±6% dentro de su contenedor.
+    let revert = () => {}
+    let cancelled = false
+    loadGsap().then(({ gsap }) => {
+      if (cancelled) return
+      const ctx = gsap.context(() => {
+        document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+          const amount = Number(el.dataset.parallax)
+          const hero = el.closest('[data-hero]')
+          gsap.fromTo(
+            el,
+            { yPercent: hero ? 0 : -amount },
+            {
+              yPercent: amount,
+              ease: 'none',
+              scrollTrigger: { trigger: hero ?? el.parentElement, start: hero ? 'top top' : 'top bottom', end: 'bottom top', scrub: true },
+            },
+          )
+        })
+      })
+      revert = () => ctx.revert()
+    })
+
+    return () => {
+      cancelled = true
+      reveal.disconnect()
+      loops.disconnect()
+      revert()
+    }
+  }, [])
+
+  return null
+}

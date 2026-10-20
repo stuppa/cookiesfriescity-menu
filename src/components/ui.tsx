@@ -62,7 +62,7 @@ export function ArrowCircle({ solid = false, className = '' }: { solid?: boolean
 /** Texto manuscrito decorativo (el contenido real está en los títulos y listas). */
 export function HandNote({ children, heart = false, className = '' }: { children: ReactNode; heart?: boolean; className?: string }) {
   return (
-    <p aria-hidden="true" className={`pointer-events-none absolute z-10 font-hand leading-[1.02] whitespace-pre text-ink uppercase ${className}`}>
+    <p aria-hidden="true" className={`hand-note pointer-events-none absolute z-10 font-hand leading-[1.02] whitespace-pre text-ink uppercase ${className}`}>
       {children}
       {heart && <Doodle name="heart" className="mx-auto mt-1 block w-[1.3em]" strokeWidth={4} />}
     </p>

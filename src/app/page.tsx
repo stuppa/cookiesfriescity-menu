@@ -4,6 +4,7 @@ import { Header } from '@/components/header'
 import { Hero } from '@/components/hero'
 import { Info } from '@/components/info'
 import { MenuGrid } from '@/components/menu-grid'
+import { PageEffects } from '@/components/providers'
 
 export default function Page() {
   return (
@@ -18,6 +19,7 @@ export default function Page() {
         <Marquee />
       </main>
       <Footer />
+      <PageEffects />
     </>
   )
 }

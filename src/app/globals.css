@@ -98,3 +98,267 @@
     opacity: 1;
   }
 }
+
+/* ---------- Animaciones ----------
+   Solo transform/opacity (más stroke-dashoffset en los doodles). Todo dentro de no-preference:
+   con reduced motion no hay nada oculto ni en movimiento.
+   data-pending / data-inview los pone providers.tsx con un IntersectionObserver. */
+.doodle-path {
+  stroke-dasharray: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Hero: corre al primer render, sin esperar JS */
+  .hero-word {
+    display: inline-block;
+    animation: word-in 0.8s var(--ease-spring) both;
+    animation-delay: calc(0.1s + var(--i) * 0.09s);
+  }
+  .hero-sub {
+    animation: rise 0.6s ease-out 0.6s both;
+  }
+  .hero-cta {
+    animation: rise 0.6s var(--ease-spring) 0.75s both;
+  }
+  .hero-photo {
+    animation: photo-in 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both;
+  }
+  .hero-float {
+    animation: float 6s ease-in-out 1.2s infinite;
+  }
+  .hero-cookies {
+    animation: cookies-in 0.9s var(--ease-spring) 0.2s both;
+  }
+  .hero-mascot {
+    animation: mascot-in 0.9s var(--ease-spring) 0.5s both;
+  }
+  .hero-sticker {
+    animation:
+      pop 0.6s var(--ease-spring) 0.6s both,
+      wobble 9s ease-in-out 1.2s infinite;
+  }
+  .hero .hand-note {
+    animation: note-in 0.7s var(--ease-spring) 0.8s both;
+  }
+  .hero .doodle-path {
+    animation: draw 0.8s ease-out both;
+    animation-delay: var(--dd, 0.9s);
+  }
+
+  /* Mascota: parpadeo y saludo ocasional */
+  .mascot-eyes {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: blink 4.5s infinite;
+  }
+  .mascot-arm {
+    transform-box: fill-box;
+    transform-origin: 0% 100%;
+    animation: wave 6s ease-in-out 2s infinite;
+  }
+
+  /* Reveal al entrar en pantalla */
+  [data-pending]:not([data-reveal='draw']),
+  [data-pending] :is([data-row], [data-pop], .hand-note, .mascot-pop) {
+    opacity: 0;
+  }
+  [data-pending] .doodle-path {
+    stroke-dashoffset: 1;
+  }
+  [data-reveal='card']:nth-child(even) {
+    --r: -1.4deg;
+  }
+  [data-reveal='card'][data-inview] {
+    animation: reveal 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s) both;
+  }
+  [data-inview] [data-row] {
+    animation: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: calc(var(--d, 0s) + 0.15s + var(--i, 0) * 0.035s);
+  }
+  [data-inview] [data-pop] {
+    animation: pop 0.6s var(--ease-spring) calc(var(--d, 0s) + 0.35s) both;
+  }
+  [data-inview] .hand-note {
+    animation: note-in 0.7s var(--ease-spring) calc(var(--d, 0s) + 0.5s) both;
+  }
+  [data-inview] .mascot-pop {
+    animation: mascot-in 0.8s var(--ease-spring) calc(var(--d, 0s) + 0.3s) both;
+  }
+  [data-inview] .doodle-path {
+    animation: draw 0.9s ease-out calc(var(--d, 0s) + 0.45s) both;
+  }
+
+  /* Loops (se pausan fuera de pantalla con data-paused) */
+  .sticker-wobble {
+    animation: wobble 9s ease-in-out infinite;
+  }
+  .burst-spin {
+    transform-origin: 50px 50px;
+    animation: spin 40s linear infinite;
+  }
+  .marquee {
+    animation: marquee 28s linear infinite;
+  }
+  .pin-bob {
+    animation: bob 2.4s var(--ease-spring) infinite;
+  }
+  [data-paused],
+  [data-paused] * {
+    animation-play-state: paused !important;
+  }
+}
+
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em) rotate(6deg) scale(0.85);
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@keyframes photo-in {
+  from {
+    transform: translateY(24px) scale(0.97);
+  }
+}
+@keyframes cookies-in {
+  from {
+    opacity: 0;
+    transform: translateY(35%);
+  }
+}
+@keyframes mascot-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30%) scale(0.6) rotate(-8deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-6%) scale(1.06) rotate(3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes note-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-14deg);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.08) rotate(3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(32px) rotate(var(--r, 1.5deg));
+  }
+}
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1.6%);
+  }
+}
+@keyframes wobble {
+  0%,
+  100% {
+    transform: rotate(0) scale(1);
+  }
+  25% {
+    transform: rotate(7deg) scale(1.04);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+  75% {
+    transform: rotate(-7deg) scale(0.97);
+  }
+}
+@keyframes blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.12);
+  }
+}
+@keyframes wave {
+  0%,
+  62%,
+  100% {
+    transform: rotate(0);
+  }
+  68% {
+    transform: rotate(-22deg);
+  }
+  74% {
+    transform: rotate(12deg);
+  }
+  80% {
+    transform: rotate(-16deg);
+  }
+  86% {
+    transform: rotate(6deg);
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-25%);
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-16%);
+  }
+  65% {
+    transform: translateY(-4%);
+  }
+}

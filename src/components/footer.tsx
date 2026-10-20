@@ -17,7 +17,11 @@ export function Marquee() {
   )
   // Decorativo: el tagline real está en el footer.
   return (
-    <div aria-hidden="true" className="overflow-hidden bg-coral py-3 font-display text-[1.6rem] leading-none font-black whitespace-nowrap uppercase lg:py-4 lg:text-[2rem]">
+    <div
+      aria-hidden="true"
+      data-loop
+      className="overflow-hidden bg-coral py-3 font-display text-[1.6rem] leading-none font-black whitespace-nowrap uppercase lg:py-4 lg:text-[2rem]"
+    >
       <div className="marquee flex w-max">
         {row}
         {row}
@@ -30,7 +34,7 @@ export function Marquee() {
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-ink/10">
+    <footer data-reveal="draw" className="relative overflow-hidden border-t border-ink/10">
       <div className={`${wrap} relative flex flex-col items-center gap-7 py-10 text-center lg:flex-row lg:justify-between lg:gap-6 lg:py-6`}>
         <a href={site.nav[0].href} aria-label={`${site.name}, inicio`}>
           <Logo className="text-[2.2rem] lg:text-[1.6rem]" />

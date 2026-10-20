@@ -29,8 +29,8 @@ export function Starburst({
   const rows = lines.length + (heart ? 0.8 : 0)
   const y0 = 50 - ((rows - 1) * lh) / 2 + size * 0.36
   return (
-    <svg viewBox="0 0 100 100" className={className} aria-hidden="true">
-      <path d={BURST} fill={fill} />
+    <svg viewBox="0 0 100 100" className={className} aria-hidden="true" data-loop>
+      <path d={BURST} fill={fill} className="burst-spin" />
       <text textAnchor="middle" fontSize={size} fontWeight={900} fill="var(--color-ink)" className="font-display uppercase">
         {lines.map((l, i) => (
           <tspan key={l} x="50" y={y0 + i * lh}>
@@ -52,9 +52,9 @@ export function Starburst({
   )
 }
 
-export function YumBadge({ className }: { className?: string }) {
+export function YumBadge({ className, ...rest }: { className?: string; 'data-pop'?: boolean }) {
   return (
-    <svg viewBox="0 0 100 100" className={className} aria-hidden="true">
+    <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...rest}>
       <circle cx="50" cy="50" r="48" fill="var(--color-pink)" />
       <text
         x="50"

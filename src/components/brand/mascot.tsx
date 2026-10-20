@@ -28,7 +28,7 @@ function Shoe({ x, y, flip = false }: { x: number; y: number; flip?: boolean }) 
 
 export function Mascot({ variant = 'wave', className }: { variant?: 'wave' | 'flag'; className?: string }) {
   return (
-    <svg viewBox="0 0 250 240" className={className} aria-hidden="true" strokeLinejoin="round">
+    <svg viewBox="0 0 250 240" className={className} aria-hidden="true" strokeLinejoin="round" data-loop>
       {/* piernas detrás del cuerpo */}
       <Hose d="M94 172c-4 18-16 30-36 34" />
       <Hose d="M132 174c6 18 18 28 38 30" />
@@ -88,7 +88,7 @@ export function Mascot({ variant = 'wave', className }: { variant?: 'wave' | 'fl
 /** Pin del mapa con la cara de la mascota. */
 export function MascotPin({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 80 100" className={className} aria-hidden="true">
+    <svg viewBox="0 0 80 100" className={`pin-bob ${className ?? ''}`} aria-hidden="true" data-loop>
       <path d="M40 97S6 62 6 38a34 34 0 1 1 68 0c0 24-34 59-34 59z" fill="var(--color-coral)" />
       <g transform="rotate(-6 40 38)">
         <rect x="27" y="17" width="30" height="40" rx="10" fill={WHITE} stroke={INK} strokeWidth={3.5} />

@@ -26,6 +26,7 @@ function Visit() {
   return (
     <div
       id="visitanos"
+      data-reveal="card"
       className="grid gap-5 md:col-span-2 md:grid-cols-2 lg:col-span-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-center lg:gap-6"
     >
       <div className="relative flex flex-col items-start md:col-span-2 lg:order-2 lg:col-span-1 lg:pl-11">
@@ -49,8 +50,10 @@ function Visit() {
       </div>
 
       <div className="relative aspect-[2] overflow-hidden rounded-[1.75rem] md:aspect-auto lg:order-1 lg:aspect-[1.9] lg:rounded-l-none lg:rounded-r-[3rem] lg:bleed-l">
-        {/* ⚑ Placeholder: foto del local */}
-        <Image src="/images/local-interior.webp" alt="Interior del café Cookie Fries City con barra rosa y plantas" fill sizes="(min-width: 1024px) 25vw, 100vw" className="object-cover" />
+        <div data-parallax="5" className="absolute inset-x-0 -inset-y-[8%]">
+          {/* ⚑ Placeholder: foto del local */}
+          <Image src="/images/local-interior.webp" alt="Interior del café Cookie Fries City con barra rosa y plantas" fill sizes="(min-width: 1024px) 25vw, 100vw" className="object-cover" />
+        </div>
         <Doodle name="star" className="absolute bottom-[34%] left-[3%] w-8 text-paper max-lg:hidden" />
       </div>
 
@@ -79,7 +82,7 @@ function Visit() {
 
 function Craving() {
   return (
-    <div id="contacto" className="relative min-h-[17.5rem] overflow-hidden rounded-card bg-pink p-6 lg:order-3 lg:min-h-0 lg:p-5">
+    <div id="contacto" data-reveal="card" className="relative min-h-[17.5rem] overflow-hidden rounded-card bg-pink p-6 lg:order-3 lg:min-h-0 lg:p-5">
       <h2 className={h2}>¿Craving?</h2>
       <p className="mt-2 max-w-[13rem] text-[1rem] leading-snug text-ink-soft lg:max-w-[11rem] lg:text-[0.82rem]">Haz tu pedido por mensaje o ven directo al café.</p>
       <Button
@@ -92,7 +95,7 @@ function Craving() {
       >
         Escríbenos
       </Button>
-      <Mascot className="absolute right-[-6%] bottom-[-10%] w-[52%] max-w-[14rem] lg:hidden" />
+      <Mascot className="mascot-pop absolute right-[-6%] bottom-[-10%] w-[52%] max-w-[14rem] lg:hidden" />
       <Doodle name="heart" className="absolute top-[12%] right-[8%] w-7 rotate-12 text-coral lg:top-[18%] lg:right-[10%]" />
       <Doodle name="heart" className="absolute top-[22%] right-[20%] w-5 -rotate-12 text-coral lg:top-[52%] lg:right-[6%] lg:w-9" />
       <Doodle name="star" className="absolute bottom-6 left-7 w-10 text-coral lg:hidden" />
@@ -103,7 +106,10 @@ function Craving() {
 function Social() {
   const photos = site.socialPhotos
   return (
-    <div className="relative lg:order-2 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-3 lg:border-l lg:border-ink/25 lg:pl-8">
+    <div
+      data-reveal="card"
+      className="relative lg:order-2 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-3 lg:border-l lg:border-ink/25 lg:pl-8 lg:[--d:90ms]"
+    >
       <div>
         <h2 className={h2}>Síguenos</h2>
         <p className="mt-2 max-w-[16rem] text-[1.05rem] leading-snug text-ink-soft lg:max-w-[13rem] lg:text-[0.8rem]">Galletas, bebidas, promos y más en nuestras redes.</p>
@@ -152,9 +158,16 @@ function Photo({ src, alt, className }: { src: string; alt: string; className: s
 
 function About() {
   return (
-    <article id="nosotros" aria-labelledby="nosotros-title" className="relative min-h-[23rem] overflow-hidden rounded-card text-paper md:col-span-2 lg:hidden">
-      {/* ⚑ Placeholder: foto de galletas */}
-      <Image src="/images/mas-que-galletas.webp" alt="" fill sizes="100vw" className="object-cover object-right" />
+    <article
+      id="nosotros"
+      data-reveal="card"
+      aria-labelledby="nosotros-title"
+      className="relative min-h-[23rem] overflow-hidden rounded-card text-paper md:col-span-2 lg:hidden"
+    >
+      <div data-parallax="6" className="absolute inset-x-0 -inset-y-[8%]">
+        {/* ⚑ Placeholder: foto de galletas */}
+        <Image src="/images/mas-que-galletas.webp" alt="" fill sizes="100vw" className="object-cover object-right" />
+      </div>
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(52_33_19/0.9)_35%,rgb(52_33_19/0.45)_65%,transparent)]" />
       <div className="relative max-w-[64%] p-6">
         <h2 id="nosotros-title" className="font-display text-[2.3rem] leading-[0.95] font-black uppercase">

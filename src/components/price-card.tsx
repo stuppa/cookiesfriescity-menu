@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Fragment } from 'react'
+import { type CSSProperties, Fragment } from 'react'
 import { type Category, type CategoryId, mxn, plus, toppings } from '@/data/menu'
 import { CategoryIcon } from './brand/icons'
 import { Doodle } from './brand/doodles'
@@ -24,6 +24,7 @@ export function PriceCard({ cat, className = '' }: { cat: Category; className?: 
     <article
       id={cat.id}
       data-cat={cat.id}
+      data-reveal="card"
       aria-labelledby={`${cat.id}-title`}
       className={`@container grid grid-cols-[minmax(0,1fr)_31%] grid-rows-[auto_1fr] overflow-hidden rounded-card bg-paper shadow-[0_14px_30px_-22px_rgb(30_26_22/0.35)] ring-1 ring-ink/5 ${l.card ?? ''} ${className}`}
     >
@@ -59,8 +60,10 @@ export function PriceCard({ cat, className = '' }: { cat: Category; className?: 
           className={`relative col-start-2 mr-3 mb-3 lg:row-span-2 lg:row-start-1 lg:m-0 ${l.compact ? 'row-span-2 row-start-1 mt-3 lg:mt-0' : 'row-start-2'}`}
         >
           <div className={`absolute inset-x-0 bottom-0 overflow-hidden rounded-2xl lg:rounded-none ${l.photo ?? 'top-0'}`}>
-            {/* ⚑ Placeholder: reemplaza el archivo por la foto real */}
-            <Image src={cat.photo.src} alt={cat.photo.alt} fill sizes="(min-width: 1024px) 14vw, (min-width: 768px) 18vw, 34vw" className="object-cover" />
+            <div data-parallax="6" className="absolute inset-x-0 -inset-y-[8%]">
+              {/* ⚑ Placeholder: reemplaza el archivo por la foto real */}
+              <Image src={cat.photo.src} alt={cat.photo.alt} fill sizes="(min-width: 1024px) 14vw, (min-width: 768px) 18vw, 34vw" className="object-cover" />
+            </div>
           </div>
           {cat.tagline && (
             <HandNote heart className={`text-[clamp(0.6rem,3cqw,1.05rem)] ${l.note ?? ''}`}>
@@ -81,6 +84,8 @@ export function PriceCard({ cat, className = '' }: { cat: Category; className?: 
 
 function PriceTable({ cat }: { cat: Category }) {
   const cols = cat.sizes ? 2 : 1
+  let i = 0
+  const row = () => ({ 'data-row': true, style: { '--i': i++ } as CSSProperties })
   return (
     <table className="w-full text-[0.875rem] leading-tight lg:text-[0.9rem] xl:text-[0.875rem]">
       <thead className={cat.sizes ? '' : 'sr-only'}>
@@ -101,7 +106,7 @@ function PriceTable({ cat }: { cat: Category }) {
       <tbody>
         {cat.items?.map((item) => (
           <Fragment key={item.name}>
-            <tr>
+            <tr {...row()}>
               <th scope="row" className="py-[3px] pr-2 text-left font-normal lg:py-[4.5px]">
                 {item.name}
                 {item.detail && <span className="block text-[0.72rem] text-ink-soft">{item.detail}</span>}
@@ -120,7 +125,7 @@ function PriceTable({ cat }: { cat: Category }) {
               ))}
             </tr>
             {item.options?.map((o) => (
-              <tr key={o.name}>
+              <tr key={o.name} {...row()}>
                 <td colSpan={cols + 1} className="py-[2px] pl-5 text-[0.84rem] lg:text-[0.9rem]">
                   <span aria-hidden="true">• </span>
                   {o.name}
@@ -129,7 +134,7 @@ function PriceTable({ cat }: { cat: Category }) {
               </tr>
             ))}
             {item.note && (
-              <tr>
+              <tr {...row()}>
                 <td colSpan={cols + 1} className="pt-1 pb-2 font-display text-[0.8rem] leading-snug font-bold">
                   {item.note}
                 </td>

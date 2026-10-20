@@ -1,4 +1,6 @@
 // ⚑ Doodles a mano aproximados. Cada uno es un solo <path pathLength=1> para poder "dibujarlo".
+import type { CSSProperties } from 'react'
+
 const doodles = {
   heart: ['0 0 40 36', 'M20.5 31C9.5 23 3.5 16.5 5.2 9.8 6.8 3.6 14.8 2.8 19.6 9.6 23.4 2.6 32.4 2.4 34.6 8.6 37 15.4 31 22.6 19.4 30.4'],
   star: ['0 0 40 40', 'M20 4 24.1 14.3 35.2 15.1 26.7 22.2 29.4 32.9 20 27 10.6 32.9 13.3 22.2 4.8 15.1 15.9 14.3 20.8 5.6'],
@@ -14,12 +16,24 @@ const doodles = {
 
 export type DoodleName = keyof typeof doodles
 
-export function Doodle({ name, className, strokeWidth = 3 }: { name: DoodleName; className?: string; strokeWidth?: number }) {
+export function Doodle({
+  name,
+  className,
+  strokeWidth = 3,
+  delay,
+}: {
+  name: DoodleName
+  className?: string
+  strokeWidth?: number
+  /** Retraso del trazo en el hero (las demás se dibujan al revelar su tarjeta). */
+  delay?: string
+}) {
   const [viewBox, d] = doodles[name]
   return (
     <svg
       viewBox={viewBox}
       className={className}
+      style={delay ? ({ '--dd': delay } as CSSProperties) : undefined}
       fill="none"
       stroke="currentColor"
       strokeWidth={strokeWidth}
