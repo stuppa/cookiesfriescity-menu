@@ -36,7 +36,7 @@ export function Footer() {
   return (
     <footer data-reveal="draw" className="relative overflow-hidden border-t border-ink/10">
       <div className={`${wrap} relative flex flex-col items-center gap-7 py-10 text-center lg:flex-row lg:justify-between lg:gap-6 lg:py-6`}>
-        <a href={site.nav[0].href} aria-label={`${site.name}, inicio`}>
+        <a href={site.nav[0].href}>
           <Logo className="text-[2.2rem] lg:text-[1.6rem]" />
         </a>
         <nav aria-label="Pie de página">

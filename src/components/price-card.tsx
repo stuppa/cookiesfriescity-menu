@@ -87,7 +87,7 @@ function PriceTable({ cat }: { cat: Category }) {
   let i = 0
   const row = () => ({ 'data-row': true, style: { '--i': i++ } as CSSProperties })
   return (
-    <table className="w-full text-[0.875rem] leading-tight lg:text-[0.9rem] xl:text-[0.875rem]">
+    <table data-sizes={cat.sizes || undefined} className="prices w-full text-[0.875rem] leading-tight lg:text-[0.9rem] xl:text-[0.875rem]">
       <thead className={cat.sizes ? '' : 'sr-only'}>
         <tr>
           <th scope="col" className="sr-only">
@@ -107,12 +107,12 @@ function PriceTable({ cat }: { cat: Category }) {
         {cat.items?.map((item) => (
           <Fragment key={item.name}>
             <tr {...row()}>
-              <th scope="row" className="py-[3px] pr-2 text-left font-normal lg:py-[4.5px]">
+              <th scope="row">
                 {item.name}
                 {item.detail && <span className="block text-[0.72rem] text-ink-soft">{item.detail}</span>}
               </th>
               {item.prices.map((p, i) => (
-                <td key={i} className={`py-[3px] tabular-nums lg:py-[4.5px] ${cat.sizes ? 'w-10 text-center lg:w-12 xl:w-11' : 'w-12 text-right'}`}>
+                <td key={i}>
                   {p === null ? (
                     <>
                       <span aria-hidden="true">-</span>

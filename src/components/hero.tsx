@@ -3,7 +3,8 @@ import { type CSSProperties, Fragment } from 'react'
 import { Doodle } from './brand/doodles'
 import { Mascot } from './brand/mascot'
 import { Starburst } from './brand/sticker'
-import { Button, HandNote, wrap } from './ui'
+import { Button } from './button'
+import { HandNote, wrap } from './ui'
 
 const words = [['Galletas,'], ['Café', 'y'], ['Buenos'], ['Momentos']]
 const photo = 'object-cover object-[12%_50%] lg:object-center'
@@ -62,11 +63,27 @@ export function Hero() {
         <div className="hero-photo relative aspect-[1.28] overflow-hidden rounded-[1.75rem] md:aspect-[1.7] lg:aspect-[638/362] lg:rounded-l-[3.5rem] lg:rounded-r-none">
           <div className="hero-float absolute inset-[-4%]">
             <div data-parallax="4" className="absolute inset-0">
-              <Image src="/images/hero-bebidas.webp" alt="Frappés de matcha, caramelo y fresa en vasos Cookie Fries" fill preload sizes={sizes} className={photo} />
+              <Image
+                src="/images/hero-bebidas.webp"
+                alt="Frappés de matcha, caramelo y fresa en vasos Cookie Fries"
+                fill
+                loading="eager"
+                fetchPriority="high"
+                sizes={sizes}
+                className={photo}
+              />
             </div>
             <div data-parallax="-2" className="absolute inset-0">
               <div className="hero-cookies absolute inset-0">
-                <Image src="/images/hero-galletas.webp" alt="Galletas de chispas, chocolate y red velvet" fill sizes={sizes} className={photo} />
+                <Image
+                  src="/images/hero-galletas.webp"
+                  alt="Galletas de chispas, chocolate y red velvet"
+                  fill
+                  loading="eager"
+                  fetchPriority="high"
+                  sizes={sizes}
+                  className={photo}
+                />
               </div>
             </div>
           </div>
@@ -86,13 +103,12 @@ export function Hero() {
         </HandNote>
         <Doodle name="arrow" className="absolute top-[8%] left-[57%] hidden w-[8%] lg:block" delay="1.6s" />
 
-        <Starburst lines={['Café', 'Galletas', 'Snacks', 'Y más']} className="hero-sticker absolute top-[18%] left-[75%] hidden w-[26%] rotate-[10deg] lg:block" />
-        <Starburst
-          lines={['Un', 'match', 'perfecto']}
-          heart
-          size={14}
-          className="hero-sticker absolute top-[-27%] right-[-2%] w-[39%] rotate-[8deg] md:top-[-30%] md:w-[26%] lg:hidden"
-        />
+        <span className="hero-sticker absolute top-[18%] left-[75%] hidden w-[26%] rotate-[10deg] lg:block">
+          <Starburst lines={['Café', 'Galletas', 'Snacks', 'Y más']} className="sticker-wobble w-full" />
+        </span>
+        <span className="hero-sticker absolute top-[-27%] right-[-2%] w-[39%] rotate-[8deg] md:top-[-30%] md:w-[26%] lg:hidden">
+          <Starburst lines={['Un', 'match', 'perfecto']} heart size={14} className="sticker-wobble w-full" />
+        </span>
 
         <div data-parallax="-10" className="absolute right-[-4%] bottom-[-9%] w-[38%] md:w-[28%] lg:top-[47%] lg:right-auto lg:bottom-auto lg:left-[63%] lg:w-[33%]">
           <Mascot className="hero-mascot w-full" />

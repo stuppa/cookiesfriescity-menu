@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import { site } from '@/data/site'
-import { PinIcon, WhatsAppIcon, socialIcon } from './brand/icons'
+import { FacebookIcon, InstagramIcon, PinIcon, TikTokIcon, WhatsAppIcon } from './brand/icons'
 import { Doodle } from './brand/doodles'
 import { Mascot, MascotPin } from './brand/mascot'
-import { Button, wrap } from './ui'
+import { Button } from './button'
+import { wrap } from './ui'
 
+const socialIcon = { Instagram: InstagramIcon, TikTok: TikTokIcon, Facebook: FacebookIcon }
 const h2 = 'font-display text-[1.9rem] leading-none font-black uppercase lg:text-[1.35rem]'
 
 // Mobile: Visítanos → ¿Craving? → Síguenos → Más que galletas. Desktop: una franja Visítanos | Síguenos | ¿Craving?
@@ -88,6 +90,7 @@ function Craving() {
       <Button
         href={site.whatsappUrl}
         external
+        data-hearts
         variant="outline"
         arrow={false}
         icon={<WhatsAppIcon className="size-6 lg:size-5" />}

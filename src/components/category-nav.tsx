@@ -50,8 +50,13 @@ export function CategoryNav() {
     return () => io.disconnect()
   }, [])
 
-  // Mantiene el chip activo a la vista dentro del carrusel.
+  // Mantiene el chip activo a la vista dentro del carrusel (no al montar: ya está al inicio).
+  const mounted = useRef(false)
   useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true
+      return
+    }
     const ul = list.current
     const chip = ul?.querySelector<HTMLElement>(`[data-chip="${active}"]`)
     if (!ul || !chip || ul.scrollWidth <= ul.clientWidth) return
@@ -70,7 +75,7 @@ export function CategoryNav() {
       <ul ref={tiles} aria-label="Categorías" className={`${wrap} flex flex-wrap justify-center gap-x-3 gap-y-3.5 pb-2 md:hidden`}>
         {categories.map((c) => (
           <li key={c.id} className="w-[calc((100%-2.25rem)/4)]">
-            <a href={`#${c.id}`} onClick={(e) => select(c.id, e.timeStamp)} className="flex flex-col items-center gap-1.5">
+            <a href={`#${c.id}`} onClick={(e) => select(c.id, e.timeStamp)} className="chip flex flex-col items-center gap-1.5 rounded-[1.1rem]">
               <span className={`grid h-[3.4rem] w-full place-items-center rounded-[1.1rem] ${toneBg[c.tone]}`}>
                 <CategoryIcon id={c.id} className="size-7" />
               </span>
@@ -96,7 +101,7 @@ export function CategoryNav() {
                   href={`#${c.id}`}
                   onClick={(e) => select(c.id, e.timeStamp)}
                   aria-current={on ? 'true' : undefined}
-                  className={`relative isolate flex h-10 items-center justify-center gap-2 rounded-full px-4 text-[0.85rem] font-semibold md:h-12 md:px-5 md:text-[0.92rem] lg:h-14 lg:gap-3 lg:text-[0.95rem] ${toneBg[c.tone]}`}
+                  className={`chip flex h-10 items-center justify-center gap-2 rounded-full px-4 text-[0.85rem] font-semibold md:h-12 md:px-5 md:text-[0.92rem] lg:h-14 lg:gap-3 lg:text-[0.95rem] ${toneBg[c.tone]}`}
                 >
                   {on && (
                     <m.span

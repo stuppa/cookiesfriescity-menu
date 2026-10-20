@@ -1,3 +1,5 @@
+'use client'
+
 // ⚑ Mascota aproximada (cookie fry blanca con chispas). Reemplázala por el SVG oficial;
 // conserva las clases mascot-eyes / mascot-arm si quieres mantener parpadeo y saludo.
 const INK = 'var(--color-ink)'
@@ -28,7 +30,8 @@ function Shoe({ x, y, flip = false }: { x: number; y: number; flip?: boolean }) 
 
 export function Mascot({ variant = 'wave', className }: { variant?: 'wave' | 'flag'; className?: string }) {
   return (
-    <svg viewBox="0 0 250 240" className={className} aria-hidden="true" strokeLinejoin="round" data-loop>
+    <svg viewBox="0 0 250 240" className={`cursor-pointer ${className ?? ''}`} aria-hidden="true" strokeLinejoin="round" data-loop data-mascot data-hearts>
+      <g className="mascot-react">
       {/* piernas detrás del cuerpo */}
       <Hose d="M94 172c-4 18-16 30-36 34" />
       <Hose d="M132 174c6 18 18 28 38 30" />
@@ -81,6 +84,7 @@ export function Mascot({ variant = 'wave', className }: { variant?: 'wave' | 'fl
           <Glove cx={188} cy={94} />
         </g>
       )}
+      </g>
     </svg>
   )
 }

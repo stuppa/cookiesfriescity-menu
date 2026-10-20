@@ -1,16 +1,10 @@
+'use client'
+
 // ⚑ Stickers aproximados (estrella y badge YUM!). Reemplázalos por los SVG oficiales si existen.
 
-// Estrella de picos irregulares, determinista para que server y cliente rendericen igual.
-function burst(points: number, outer: number, inner: number) {
-  let d = ''
-  for (let i = 0; i < points * 2; i++) {
-    const r = i % 2 ? inner : outer * (0.88 + 0.12 * Math.abs(Math.sin(i * 7.3)))
-    const a = (Math.PI * i) / points - Math.PI / 2
-    d += `${i ? 'L' : 'M'}${(50 + r * Math.cos(a)).toFixed(2)} ${(50 + r * Math.sin(a)).toFixed(2)}`
-  }
-  return `${d}Z`
-}
-const BURST = burst(13, 50, 39)
+// Estrella de 13 picos irregulares (precalculada: igual en server y cliente).
+const BURST =
+  'M50.0 6.0L59.3 12.1L72.9 6.3L75.9 20.8L90.2 22.3L86.5 36.2L94.8 44.6L88.7 54.7L96.5 67.6L82.1 72.2L81.9 86.0L68.1 84.5L61.0 94.8L50.0 89.0L38.0 98.5L31.9 84.5L18.7 85.3L17.9 72.2L5.9 66.7L11.3 54.7L0.4 44.0L13.5 36.2L12.0 23.7L24.1 20.8L27.7 7.5L40.7 12.1Z'
 
 export function Starburst({
   lines,

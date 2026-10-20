@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import type { Tone } from '@/data/menu'
-import { ArrowRight, ArrowUpRight } from './brand/icons'
+import { ArrowRight } from './brand/icons'
 import { Doodle } from './brand/doodles'
 
 export const wrap = 'mx-auto w-full max-w-[82.5rem] px-4 sm:px-6'
@@ -12,40 +12,6 @@ export const toneBg: Record<Tone, string> = {
   butter: 'bg-butter',
   sky: 'bg-sky',
   lilac: 'bg-lilac',
-}
-
-export function Button({
-  href,
-  children,
-  variant = 'solid',
-  size = 'md',
-  icon,
-  arrow = true,
-  external = false,
-  className = '',
-}: {
-  href: string
-  children: ReactNode
-  variant?: 'solid' | 'outline'
-  size?: 'sm' | 'md'
-  icon?: ReactNode
-  arrow?: boolean
-  external?: boolean
-  className?: string
-}) {
-  const look = variant === 'solid' ? 'bg-coral' : 'bg-paper ring-2 ring-coral ring-inset'
-  const dims = size === 'sm' ? 'h-10 gap-2 px-4 text-[0.8rem]' : 'h-12 gap-3 px-6 text-[0.95rem] lg:h-14 lg:px-7 lg:text-base'
-  return (
-    <a
-      href={href}
-      {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
-      className={`inline-flex items-center justify-center rounded-full font-display font-extrabold whitespace-nowrap uppercase tracking-wide text-ink ${look} ${dims} ${className}`}
-    >
-      {icon}
-      <span>{children}</span>
-      {arrow && <ArrowUpRight className={size === 'sm' ? 'size-4' : 'size-5'} />}
-    </a>
-  )
 }
 
 export function ArrowCircle({ solid = false, className = '' }: { solid?: boolean; className?: string }) {

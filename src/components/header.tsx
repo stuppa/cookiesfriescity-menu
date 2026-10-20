@@ -1,11 +1,13 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { type CSSProperties, useEffect, useRef } from 'react'
 import { site } from '@/data/site'
 import { Doodle } from './brand/doodles'
 import { CloseIcon, MenuIcon } from './brand/icons'
 import { Logo } from './brand/logo'
-import { Button, wrap } from './ui'
+import { Mascot } from './brand/mascot'
+import { Button } from './button'
+import { wrap } from './ui'
 
 export function Header() {
   const sheet = useRef<HTMLDivElement>(null)
@@ -22,7 +24,7 @@ export function Header() {
   return (
     <header data-header className="sticky top-0 z-40 bg-cream">
       <div data-header-row className={`${wrap} flex h-[4.5rem] items-center gap-3 lg:grid lg:h-24 lg:grid-cols-[1fr_auto_1fr]`}>
-        <a href={site.nav[0].href} aria-label={`${site.name}, inicio`} className="mr-auto">
+        <a href={site.nav[0].href} className="mr-auto">
           <Logo data-logo className="text-[1.55rem] lg:text-[2.05rem]" />
         </a>
 
@@ -70,8 +72,8 @@ export function Header() {
         </div>
         <nav aria-label="Principal (móvil)" className={`${wrap} pt-8`}>
           <ul className="space-y-5">
-            {site.nav.map((l) => (
-              <li key={l.label}>
+            {site.nav.map((l, i) => (
+              <li key={l.label} style={{ '--i': i } as CSSProperties}>
                 <a
                   href={l.href}
                   aria-current={l.current ? 'page' : undefined}
@@ -88,6 +90,8 @@ export function Header() {
             Pide aquí
           </Button>
         </nav>
+        <Mascot className="absolute right-[-2rem] bottom-8 w-56 -rotate-6" />
+        <Doodle name="heart" className="absolute right-40 bottom-64 w-10 rotate-12 text-coral" />
       </div>
     </header>
   )

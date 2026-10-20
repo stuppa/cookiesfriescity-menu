@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import type { CSSProperties } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { category, cookieBox, cookieSingle, dips, extras, mxn, packages, plus } from '@/data/menu'
 import { CheckIcon } from './brand/icons'
 import { Doodle } from './brand/doodles'
@@ -21,18 +21,43 @@ export function MenuGrid() {
       <h2 id="menu-title" className="sr-only">
         Menú
       </h2>
-      <CookiesPromo className="md:hidden" />
-      <PriceCard cat={category('calientes')} className="md:order-1 md:col-span-6 xl:col-span-4" />
-      <PriceCard cat={category('frias')} className="md:order-2 md:col-span-6 md:[--d:90ms] xl:col-span-4" />
-      <PriceCard cat={category('frappes')} className="md:order-4 md:col-span-6 md:[--d:90ms] xl:col-span-4 xl:[--d:0ms]" />
-      <PriceCard cat={category('snacks')} className="md:order-5 md:col-span-6 md:[--d:90ms] xl:col-span-4" />
-      <PriceCard cat={category('bites')} className="md:order-7 md:col-span-6 md:[--d:90ms] xl:col-span-5 xl:[--d:0ms]" />
-      <PriceCard cat={category('helado')} className="md:order-8 md:col-span-6 xl:col-span-4 xl:[--d:90ms]" />
-      <CookiesCard className="md:order-3 md:col-span-6 md:row-span-2 xl:col-span-4 xl:row-span-1 xl:[--d:180ms]" />
-      <PackagesCard className="md:order-6 md:col-span-6 xl:col-span-4 xl:[--d:180ms]" />
-      <ExtrasCard className="md:order-9 md:col-span-6 md:[--d:90ms] xl:col-span-3 xl:[--d:180ms]" />
+      <Lift className="md:hidden">
+        <CookiesPromo />
+      </Lift>
+      <Lift className="md:order-1 md:col-span-6 xl:col-span-4">
+        <PriceCard cat={category('calientes')} />
+      </Lift>
+      <Lift className="md:order-2 md:col-span-6 md:[--d:90ms] xl:col-span-4">
+        <PriceCard cat={category('frias')} />
+      </Lift>
+      <Lift className="md:order-4 md:col-span-6 md:[--d:90ms] xl:col-span-4 xl:[--d:0ms]">
+        <PriceCard cat={category('frappes')} />
+      </Lift>
+      <Lift className="md:order-5 md:col-span-6 md:[--d:90ms] xl:col-span-4">
+        <PriceCard cat={category('snacks')} />
+      </Lift>
+      <Lift className="md:order-7 md:col-span-6 md:[--d:90ms] xl:col-span-5 xl:[--d:0ms]">
+        <PriceCard cat={category('bites')} />
+      </Lift>
+      <Lift className="md:order-8 md:col-span-6 xl:col-span-4 xl:[--d:90ms]">
+        <PriceCard cat={category('helado')} />
+      </Lift>
+      <Lift className="md:order-3 md:col-span-6 md:row-span-2 xl:col-span-4 xl:row-span-1 xl:[--d:180ms]">
+        <CookiesCard />
+      </Lift>
+      <Lift className="md:order-6 md:col-span-6 xl:col-span-4 xl:[--d:180ms]">
+        <PackagesCard />
+      </Lift>
+      <Lift className="md:order-9 md:col-span-6 md:[--d:90ms] xl:col-span-3 xl:[--d:180ms]">
+        <ExtrasCard />
+      </Lift>
     </section>
   )
+}
+
+/** Celda del bento: ubica la tarjeta y le da el hover lift / feedback al tocar. */
+function Lift({ className, children }: { className: string; children: ReactNode }) {
+  return <div className={`lift ${className} [&>*]:h-full`}>{children}</div>
 }
 
 /** Mobile: primera tarjeta, rosa, con la cajita de cookie fries. */

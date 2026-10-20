@@ -70,10 +70,13 @@ export function PageEffects() {
       },
       { rootMargin: '0px 0px -10% 0px' },
     )
-    document.querySelectorAll('[data-reveal]').forEach((el) => {
-      if (el.getBoundingClientRect().top <= innerHeight) return
-      el.setAttribute('data-pending', '')
-      reveal.observe(el)
+    // En un frame aparte para no forzar layout justo al hidratar.
+    const frame = requestAnimationFrame(() => {
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        if (el.getBoundingClientRect().top <= innerHeight) return
+        el.setAttribute('data-pending', '')
+        reveal.observe(el)
+      })
     })
 
     // Loops (flotación, mascota, marquee…) en pausa fuera de pantalla.
@@ -107,6 +110,7 @@ export function PageEffects() {
 
     return () => {
       cancelled = true
+      cancelAnimationFrame(frame)
       reveal.disconnect()
       loops.disconnect()
       revert()

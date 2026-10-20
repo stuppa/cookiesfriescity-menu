@@ -1,3 +1,5 @@
+'use client'
+
 // ⚑ Doodles a mano aproximados. Cada uno es un solo <path pathLength=1> para poder "dibujarlo".
 import type { CSSProperties } from 'react'
 

@@ -8,7 +8,7 @@
   --color-ink: #1e1a16;
   --color-ink-soft: #4f4842;
   --color-coral: #fd7a50;
-  --color-coral-ink: #b33a16; /* coral para texto chico: AA sobre crema y pasteles */
+  --color-coral-ink: #a3330f; /* coral para texto chico: AA (≥4.5) sobre crema y todos los pasteles */
   --color-peach: #ffd6c6;
   --color-pink: #fccadc;
   --color-mint: #dceeba;
@@ -21,7 +21,7 @@
   /* ⚑ Las variables --font-* las define next/font en src/app/layout.tsx */
   --font-display: var(--font-grandstander), ui-rounded, system-ui, sans-serif;
   --font-hand: var(--font-shantell), ui-rounded, system-ui, sans-serif;
-  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
   --radius-card: 1.5rem;
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -97,6 +97,130 @@
   html[data-compact] [data-header]::after {
     opacity: 1;
   }
+
+  /* Microinteracciones: lift con sombra (la sombra se muestra con opacity, no se anima box-shadow) */
+  .lift,
+  .chip {
+    position: relative;
+    isolation: isolate;
+    transition:
+      translate 0.4s var(--ease-spring),
+      scale 0.2s ease-out;
+  }
+  .lift::before,
+  .chip::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    box-shadow: 0 26px 40px -24px rgb(30 26 22 / 0.5);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .lift::before {
+    border-radius: var(--radius-card);
+  }
+  .chip::after {
+    box-shadow: 0 12px 18px -12px rgb(30 26 22 / 0.45);
+  }
+  .lift:active {
+    scale: 0.985;
+  }
+  .chip:active {
+    scale: 0.94;
+  }
+  .lift img {
+    transition: scale 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @media (hover: hover) {
+    .lift:hover::before,
+    .chip:hover::after {
+      opacity: 1;
+    }
+  }
+
+  /* Tablas de precios: estilos por celda aquí en vez de repetir clases en ~60 filas */
+  .prices tbody :is(th[scope='row'], td:not([colspan])) {
+    padding-block: 3px;
+  }
+  .prices tbody th[scope='row'] {
+    padding-right: 0.5rem;
+    text-align: left;
+    font-weight: 400;
+  }
+  .prices tbody td:not([colspan]) {
+    width: 3rem;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .prices[data-sizes] tbody td:not([colspan]) {
+    width: 2.5rem;
+    text-align: center;
+  }
+  @media (min-width: 64rem) {
+    .prices tbody :is(th[scope='row'], td:not([colspan])) {
+      padding-block: 4.5px;
+    }
+    .prices[data-sizes] tbody td:not([colspan]) {
+      width: 3rem;
+    }
+  }
+  @media (min-width: 80rem) {
+    .prices[data-sizes] tbody td:not([colspan]) {
+      width: 2.75rem;
+    }
+  }
+
+  .mascot-react {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    transition: transform 0.25s var(--ease-spring);
+  }
+  [data-mascot]:active .mascot-react {
+    transform: scale(1.06, 0.9);
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lift:hover {
+    translate: 0 -6px;
+  }
+  .chip:hover {
+    translate: 0 -2px;
+  }
+  .lift:hover img {
+    scale: 1.06;
+  }
+  [data-mascot]:hover .mascot-react {
+    animation: hop 0.7s var(--ease-spring);
+  }
+}
+
+/* Menú móvil (popover nativo): entra con fade/slide y los links en cascada */
+@media (prefers-reduced-motion: no-preference) {
+  #nav-mobile {
+    transition:
+      opacity 0.3s,
+      translate 0.35s var(--ease-spring),
+      display 0.35s allow-discrete,
+      overlay 0.35s allow-discrete;
+  }
+  #nav-mobile:not(:popover-open) {
+    opacity: 0;
+    translate: 0 -1rem;
+  }
+  @starting-style {
+    #nav-mobile:popover-open {
+      opacity: 0;
+      translate: 0 -1rem;
+    }
+  }
+  #nav-mobile:popover-open li {
+    animation: rise 0.45s var(--ease-spring) both;
+    animation-delay: calc(0.08s + var(--i, 0) * 0.05s);
+  }
 }
 
 /* ---------- Animaciones ----------
@@ -133,9 +257,7 @@
     animation: mascot-in 0.9s var(--ease-spring) 0.5s both;
   }
   .hero-sticker {
-    animation:
-      pop 0.6s var(--ease-spring) 0.6s both,
-      wobble 9s ease-in-out 1.2s infinite;
+    animation: pop 0.6s var(--ease-spring) 0.6s both;
   }
   .hero .hand-note {
     animation: note-in 0.7s var(--ease-spring) 0.8s both;
@@ -165,7 +287,7 @@
   [data-pending] .doodle-path {
     stroke-dashoffset: 1;
   }
-  [data-reveal='card']:nth-child(even) {
+  .lift:nth-child(even) {
     --r: -1.4deg;
   }
   [data-reveal='card'][data-inview] {
@@ -202,8 +324,9 @@
   .pin-bob {
     animation: bob 2.4s var(--ease-spring) infinite;
   }
-  [data-paused],
-  [data-paused] * {
+  /* Solo los loops; las entradas de una sola vez siempre terminan */
+  [data-paused]:is(.pin-bob, .sticker-wobble),
+  [data-paused] :is(.hero-float, .mascot-eyes, .mascot-arm, .burst-spin, .sticker-wobble, .marquee) {
     animation-play-state: paused !important;
   }
 }
@@ -348,6 +471,14 @@
 @keyframes spin {
   to {
     transform: rotate(1turn);
+  }
+}
+@keyframes hop {
+  30% {
+    transform: translateY(-8%) rotate(-6deg);
+  }
+  60% {
+    transform: translateY(0) rotate(4deg) scale(1.04, 0.96);
   }
 }
 @keyframes bob {

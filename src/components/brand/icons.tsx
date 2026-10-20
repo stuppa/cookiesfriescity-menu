@@ -1,3 +1,5 @@
+'use client'
+
 // ⚑ Iconos aproximados a los del mock (trazo a mano). Reemplázalos por los oficiales si existen.
 import type { ReactNode, SVGProps } from 'react'
 import type { CategoryId } from '@/data/menu'
@@ -151,4 +153,3 @@ export const WhatsAppIcon = (p: P) => (
   </Svg>
 )
 
-export const socialIcon = { Instagram: InstagramIcon, TikTok: TikTokIcon, Facebook: FacebookIcon }

@@ -1,6 +1,7 @@
 import { CategoryNav } from '@/components/category-nav'
 import { Footer, Marquee } from '@/components/footer'
 import { Header } from '@/components/header'
+import { Hearts } from '@/components/hearts'
 import { Hero } from '@/components/hero'
 import { Info } from '@/components/info'
 import { MenuGrid } from '@/components/menu-grid'
@@ -20,6 +21,7 @@ export default function Page() {
       </main>
       <Footer />
       <PageEffects />
+      <Hearts />
     </>
   )
 }
