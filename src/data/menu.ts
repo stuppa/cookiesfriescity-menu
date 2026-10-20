@@ -10,28 +10,25 @@ export type Price = number | null
 
 export type Extra = { name: string; extra?: number }
 
-export type Item = {
+export type Item<P extends Price[] = Price[]> = {
   name: string
   /** Texto chico junto al nombre, ej. "(Fresa / Mango)". */
   detail?: string
-  /** [chico, grande] en categorías con tamaños; [precio] en las demás. */
-  prices: Price[]
+  /** [chico, grande] en categorías con tamaños; [precio] en las demás (el build falla si no cuadra). */
+  prices: P
   /** Variantes del producto, ej. sabores del rol de canela. */
   options?: Extra[]
   /** Aclaración que va debajo del producto. */
   note?: string
 }
 
-export type Category = {
+type CategoryBase = {
   id: CategoryId
   /** Título de la tarjeta y del chip en desktop. */
   label: string
   /** Chip en mobile. */
   short: string
   tone: Tone
-  /** Muestra columnas Ch / Gde. */
-  sizes?: boolean
-  items?: Item[]
   /** Nota destacada al final de la tarjeta. */
   footnote?: string
   /** Muestra la lista de toppings al final. */
@@ -41,6 +38,10 @@ export type Category = {
   /** ⚑ Placeholder: reemplaza el archivo en public/images por la foto real (mismo nombre). */
   photo?: { src: string; alt: string }
 }
+
+/** Con `sizes` (columnas Ch / Gde) cada producto lleva dos precios; sin `sizes`, uno. */
+export type Category = CategoryBase &
+  ({ sizes: true; items: Item<[Price, Price]>[] } | { sizes?: false; items?: Item<[number]>[] })
 
 export const categories: Category[] = [
   { id: 'cookies', label: 'Cookies', short: 'Cookies', tone: 'peach' },
