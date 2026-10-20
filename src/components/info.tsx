@@ -63,7 +63,7 @@ function Visit() {
         href={site.mapsUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Ver la ubicación en Google Maps"
+        aria-label="Aquí estamos: ver la ubicación en Google Maps"
         className="relative block aspect-[1.3] overflow-hidden rounded-[1.75rem] bg-[#ebe9de] lg:hidden"
       >
         <span

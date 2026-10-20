@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Menú digital · Cookie Fries City
 
-## Getting Started
-
-First, run the development server:
+Next.js 16 (App Router) · Tailwind CSS 4 · Motion · GSAP + ScrollTrigger · Lenis.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Qué editar
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Quiero cambiar… | Archivo |
+|---|---|
+| Precios, productos, sabores, dips, extras, paquetes | `src/data/menu.ts` |
+| WhatsApp, dirección, Google Maps, redes, links del menú | `src/data/site.ts` |
+| Fotos | `public/images/` (mismo nombre de archivo) |
+| Logo, mascota, stickers, doodles, iconos | `src/components/brand/` |
+| Fuentes | `src/app/layout.tsx` |
+| Colores | `src/app/globals.css` (`@theme`) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Todo lo que es provisional está marcado con **⚑** en el código.
 
-## Learn More
+- **Precio:** cambia el número. `null` en un tamaño se muestra como "-".
+- **Producto:** agrega un objeto al `items` de su categoría.
+- **Fotos:** las actuales son recortes de los mocks (baja resolución). El hero va en dos capas con el mismo encuadre: `hero-bebidas.webp` (fondo) y `hero-galletas.webp` (galletas con fondo transparente).
+- **Fuentes:** Grandstander (títulos) y Shantell Sans (notas a mano) son placeholders de Google Fonts. Para la oficial usa `next/font/local` con la misma `variable`. El texto corrido usa la fuente del sistema (cero descarga). Si prefieres otra, define `--font-sans` en `globals.css`.
 
-To learn more about Next.js, take a look at the following resources:
+## Animaciones
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/app/globals.css`: keyframes y reglas (solo `transform`/`opacity`).
+- `src/components/providers.tsx`: Lenis, anclas con offset, reveals al entrar en pantalla, parallax con GSAP y pausa de loops fuera de pantalla.
+- Con `prefers-reduced-motion: reduce` no se oculta ni se mueve nada.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Vercel detecta Next.js sin configuración: `vercel` (preview) o `vercel --prod`.
