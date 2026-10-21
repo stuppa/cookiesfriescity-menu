@@ -4,7 +4,7 @@ type Gsap = { gsap: typeof import('gsap').gsap; ScrollTrigger: typeof import('gs
 
 let gsapReady: Promise<Gsap> | undefined
 
-/** GSAP + ScrollTrigger bajo demanda (no entran en el bundle inicial). */
+/** GSAP + ScrollTrigger bajo demanda, solo como respaldo del parallax (no entran en el bundle inicial). */
 export function loadGsap() {
   gsapReady ??= Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
     gsap.registerPlugin(ScrollTrigger)
@@ -19,6 +19,9 @@ export const setLenis = (l: Lenis | null) => {
 }
 
 export const prefersReducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches
+
+/** Con scroll-driven animations el parallax lo hace el CSS (globals.css) y GSAP no se descarga. */
+export const supportsScrollTimeline = () => CSS.supports('animation-timeline: view()')
 
 /** Alto de lo que queda fijo arriba: header + barra de categorías. */
 function stickyOffset() {
@@ -36,7 +39,7 @@ export function scrollToId(id: string) {
   const el = findTarget(id)
   if (!el) return false
   const top = el.getBoundingClientRect().top + window.scrollY - stickyOffset()
-  if (lenis) lenis.scrollTo(top, { duration: 1.1 })
+  if (lenis) lenis.scrollTo(top, { duration: 0.8 })
   else window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
   history.replaceState(null, '', `#${id}`)
   return true

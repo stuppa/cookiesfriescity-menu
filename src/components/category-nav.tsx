@@ -66,7 +66,7 @@ export function CategoryNav() {
   // Al tocar un chip se fija de inmediato y el spy espera a que termine el scroll suave.
   const select = (id: CategoryId, at: number) => {
     clicked.current = id
-    lockUntil.current = at + 1300
+    lockUntil.current = at + 1000 // scroll suave de 0.8s + margen
     setActive(id)
   }
 

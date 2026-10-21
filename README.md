@@ -15,7 +15,8 @@ npm run build && npm start
 | Precios, productos, sabores, dips, extras, paquetes | `src/data/menu.ts` |
 | WhatsApp, dirección, Google Maps, redes, links del menú | `src/data/site.ts` |
 | Fotos | `public/images/` (mismo nombre de archivo) |
-| Logo, mascota, stickers, doodles, iconos | `src/components/brand/` |
+| Mascota | `public/brand/mascota-*.svg` (cuerpo) + ojos en `src/components/brand/mascot.tsx` |
+| Logo, stickers, doodles, iconos | `src/components/brand/` |
 | Fuentes | `src/app/layout.tsx` |
 | Colores | `src/app/globals.css` (`@theme`) |
 
@@ -28,8 +29,8 @@ Todo lo que es provisional está marcado con **⚑** en el código.
 
 ## Animaciones
 
-- `src/app/globals.css`: keyframes y reglas (solo `transform`/`opacity`).
-- `src/components/providers.tsx`: Lenis, anclas con offset, reveals al entrar en pantalla, parallax con GSAP y pausa de loops fuera de pantalla.
+- `src/app/globals.css`: keyframes y reglas (solo `transform`/`opacity`), incluido el parallax con CSS scroll-driven animations (corre en el compositor, sin JS por frame). Monto por elemento: `data-parallax` + `[--parallax:6]` = ±6 %.
+- `src/components/providers.tsx`: Lenis, anclas con offset, reveals al entrar en pantalla, pausa de loops fuera de pantalla y el respaldo del parallax con GSAP (solo se descarga en navegadores sin scroll-driven animations).
 - Con `prefers-reduced-motion: reduce` no se oculta ni se mueve nada.
 
 ## Deploy

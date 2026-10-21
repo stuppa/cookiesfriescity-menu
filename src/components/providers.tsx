@@ -2,7 +2,7 @@
 
 import { LazyMotion, MotionConfig } from 'motion/react'
 import { type ReactNode, useEffect } from 'react'
-import { loadGsap, prefersReducedMotion, scrollToId, setLenis } from '@/lib/scroll'
+import { loadGsap, prefersReducedMotion, scrollToId, setLenis, supportsScrollTimeline } from '@/lib/scroll'
 
 const features = () => import('@/lib/motion-features').then((m) => m.default)
 
@@ -16,20 +16,18 @@ export function Providers({ children }: { children: ReactNode }) {
     }
     document.addEventListener('click', onClick)
 
-    // Lenis + ScrollTrigger en el mismo loop; con reduced motion se queda el scroll nativo.
+    // Lenis suaviza la rueda (el táctil queda nativo); con reduced motion se queda el scroll nativo.
+    // lerp 0.15 (default 0.1): sigue suave pero se asienta en ~1/3 s en vez de ~1/2 s, sin sensación de arrastre.
+    // ScrollTrigger solo se sincroniza si el parallax cayó al respaldo de GSAP.
     let destroy = () => {}
     let cancelled = false
     if (!prefersReducedMotion()) {
-      Promise.all([import('lenis'), loadGsap()]).then(([{ default: Lenis }, { gsap, ScrollTrigger }]) => {
+      Promise.all([import('lenis'), supportsScrollTimeline() ? null : loadGsap()]).then(([{ default: Lenis }, gsap]) => {
         if (cancelled) return
-        const lenis = new Lenis()
-        const raf = (time: number) => lenis.raf(time * 1000)
-        lenis.on('scroll', ScrollTrigger.update)
-        gsap.ticker.add(raf)
-        gsap.ticker.lagSmoothing(0)
+        const lenis = new Lenis({ lerp: 0.15, autoRaf: true })
+        if (gsap) lenis.on('scroll', gsap.ScrollTrigger.update)
         setLenis(lenis)
         destroy = () => {
-          gsap.ticker.remove(raf)
           lenis.destroy()
           setLenis(null)
         }
@@ -59,17 +57,15 @@ export function PageEffects() {
     if (prefersReducedMotion()) return
 
     // Reveal: solo se oculta lo que arranca debajo del viewport, así nada parpadea al hidratar.
-    const reveal = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (!e.isIntersecting) continue
-          e.target.removeAttribute('data-pending')
-          e.target.setAttribute('data-inview', '')
-          reveal.unobserve(e.target)
-        }
-      },
-      { rootMargin: '0px 0px -10% 0px' },
-    )
+    // Arranca en cuanto asoma el primer pixel: la tarjeta nunca se ve como hueco vacío esperando su turno.
+    const reveal = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue
+        e.target.removeAttribute('data-pending')
+        e.target.setAttribute('data-inview', '')
+        reveal.unobserve(e.target)
+      }
+    })
     // En un frame aparte para no forzar layout justo al hidratar.
     const frame = requestAnimationFrame(() => {
       document.querySelectorAll('[data-reveal]').forEach((el) => {
@@ -85,14 +81,15 @@ export function PageEffects() {
     })
     document.querySelectorAll('[data-loop]').forEach((el) => loops.observe(el))
 
-    // Parallax ligado al scroll: data-parallax="6" mueve ±6% dentro de su contenedor.
+    // Parallax: data-parallax + [--parallax:6] mueve ±6% dentro de su contenedor. Lo hace el CSS (globals.css)
+    // en el compositor; GSAP es el respaldo para navegadores sin scroll-driven animations.
     let revert = () => {}
     let cancelled = false
-    loadGsap().then(({ gsap }) => {
+    if (!supportsScrollTimeline()) loadGsap().then(({ gsap }) => {
       if (cancelled) return
       const ctx = gsap.context(() => {
         document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
-          const amount = Number(el.dataset.parallax)
+          const amount = Number(getComputedStyle(el).getPropertyValue('--parallax'))
           const hero = el.closest('[data-hero]')
           gsap.fromTo(
             el,

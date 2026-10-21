@@ -27,28 +27,28 @@ export function MenuGrid() {
       <Lift className="md:order-1 md:col-span-6 xl:col-span-4">
         <PriceCard cat={category('calientes')} />
       </Lift>
-      <Lift className="md:order-2 md:col-span-6 md:[--d:90ms] xl:col-span-4">
+      <Lift className="md:order-2 md:col-span-6 md:[--d:60ms] xl:col-span-4">
         <PriceCard cat={category('frias')} />
       </Lift>
-      <Lift className="md:order-4 md:col-span-6 md:[--d:90ms] xl:col-span-4 xl:[--d:0ms]">
+      <Lift className="md:order-4 md:col-span-6 md:[--d:60ms] xl:col-span-4 xl:[--d:0ms]">
         <PriceCard cat={category('frappes')} />
       </Lift>
-      <Lift className="md:order-5 md:col-span-6 md:[--d:90ms] xl:col-span-4">
+      <Lift className="md:order-5 md:col-span-6 md:[--d:60ms] xl:col-span-4">
         <PriceCard cat={category('snacks')} />
       </Lift>
-      <Lift className="md:order-7 md:col-span-6 md:[--d:90ms] xl:col-span-5 xl:[--d:0ms]">
+      <Lift className="md:order-7 md:col-span-6 md:[--d:60ms] xl:col-span-5 xl:[--d:0ms]">
         <PriceCard cat={category('bites')} />
       </Lift>
-      <Lift className="md:order-8 md:col-span-6 xl:col-span-4 xl:[--d:90ms]">
+      <Lift className="md:order-8 md:col-span-6 xl:col-span-4 xl:[--d:60ms]">
         <PriceCard cat={category('helado')} />
       </Lift>
-      <Lift className="md:order-3 md:col-span-6 md:row-span-2 xl:col-span-4 xl:row-span-1 xl:[--d:180ms]">
+      <Lift className="md:order-3 md:col-span-6 md:row-span-2 xl:col-span-4 xl:row-span-1 xl:[--d:120ms]">
         <CookiesCard />
       </Lift>
-      <Lift className="md:order-6 md:col-span-6 xl:col-span-4 xl:[--d:180ms]">
+      <Lift className="md:order-6 md:col-span-6 xl:col-span-4 xl:[--d:120ms]">
         <PackagesCard />
       </Lift>
-      <Lift className="md:order-9 md:col-span-6 md:[--d:90ms] xl:col-span-3 xl:[--d:180ms]">
+      <Lift className="md:order-9 md:col-span-6 md:[--d:60ms] xl:col-span-3 xl:[--d:120ms]">
         <ExtrasCard />
       </Lift>
     </section>
@@ -84,10 +84,10 @@ function CookiesPromo({ className = '' }: { className?: string }) {
           className="object-cover [mask-image:radial-gradient(closest-side,#000_78%,transparent)]"
         />
         <YumBadge data-pop className="absolute top-[26%] right-[-4%] w-[22%] rotate-[8deg]" />
-        <span data-pop className="absolute right-[-8%] bottom-[-8%] w-[40%] [--d:0.25s]">
+        <span data-pop className="absolute right-[-8%] bottom-[-8%] w-[40%] [--d:0.15s]">
           <Starburst lines={[mxn(cookieBox.price)]} fill="var(--color-butter)" size={30} className="sticker-wobble w-full" />
         </span>
-        <Mascot className="mascot-pop absolute bottom-[-6%] left-[-26%] w-[46%]" />
+        <Mascot pose="wave" className="mascot-pop absolute bottom-[-6%] left-[-30%] w-[64%]" />
       </div>
       <Doodle name="heart" className="absolute top-[52%] left-[6%] w-8 -rotate-12 text-coral" />
     </article>
@@ -99,7 +99,7 @@ function CookiesCard({ className = '' }: { className?: string }) {
   const flavors = cookieBox.flavors.length
   return (
     <article id="cookies" data-cat="cookies" data-reveal="card" aria-labelledby="cookies-title" className={`${card} flex flex-col bg-lime ${className}`}>
-      <div className="relative flex flex-1 flex-col p-5 pb-3 lg:p-6 lg:pb-3">
+      <div className="relative flex flex-1 flex-col p-5 pb-9 md:pb-3 lg:p-6 lg:pb-3">
         <h3 id="cookies-title" className="relative w-fit font-display text-[clamp(1.3rem,6.3vw,1.7rem)] leading-none font-black uppercase md:text-[2.5rem]">
           <span className="md:hidden">Un match perfecto</span>
           <span className="max-md:hidden">Cookies</span>
@@ -152,8 +152,8 @@ function CookiesCard({ className = '' }: { className?: string }) {
             className="object-cover [mask-image:radial-gradient(closest-side,#000_80%,transparent)]"
           />
         </div>
-        <Mascot className="mascot-pop absolute bottom-[-0.5rem] left-[22%] w-[28%] md:w-[34%] lg:left-[20%] lg:w-[30%]" />
-        <Doodle name="star" className="absolute bottom-5 left-4 w-8 text-coral md:hidden" />
+        <Mascot pose="wave" className="mascot-pop absolute bottom-[-0.4rem] left-[6%] w-[54%] md:left-[2%] md:w-[56%]" />
+        <Doodle name="star" className="absolute top-[7.4rem] right-[38%] w-7 text-coral md:hidden" />
       </div>
 
       <div className="rounded-t-card bg-pink px-5 pt-4 pb-5 max-md:hidden lg:px-6">
@@ -214,7 +214,7 @@ function PackagesCard({ className = '' }: { className?: string }) {
           </li>
         ))}
       </ul>
-      <Mascot variant="flag" className="mascot-pop absolute right-[3%] bottom-[-5%] w-[46%] max-w-[15rem] lg:w-[46%]" />
+      <Mascot pose="flag" className="mascot-pop absolute right-[-1%] bottom-[-3%] w-[54%] max-w-[17rem] xl:w-[44%]" />
       <Doodle name="star" className="absolute bottom-5 left-5 w-9 text-coral" />
       <Doodle name="rays" className="absolute top-[38%] right-[9%] w-8 rotate-[30deg] text-coral max-md:hidden" />
     </article>

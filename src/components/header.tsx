@@ -90,7 +90,7 @@ export function Header() {
             Pide aquí
           </Button>
         </nav>
-        <Mascot className="absolute right-[-2rem] bottom-8 w-56 -rotate-6" />
+        <Mascot className="absolute right-[-1rem] bottom-8 w-72 -rotate-3" />
         <Doodle name="heart" className="absolute right-40 bottom-64 w-10 rotate-12 text-coral" />
       </div>
     </header>

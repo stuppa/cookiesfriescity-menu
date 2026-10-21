@@ -70,7 +70,7 @@
   [data-logo],
   #category-bar {
     transition-property: translate, transform, opacity, visibility;
-    transition-duration: 0.4s;
+    transition-duration: 0.3s;
     transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   [data-logo] {
@@ -83,7 +83,7 @@
     height: 1px;
     background: rgb(30 26 22 / 0.1);
     opacity: 0;
-    transition: opacity 0.4s;
+    transition: opacity 0.3s;
   }
   html[data-compact] :is([data-header], #category-bar) {
     transform: translateY(calc(-1 * var(--shrink)));
@@ -132,7 +132,7 @@
     scale: 0.94;
   }
   .lift img {
-    transition: scale 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: scale 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   @media (hover: hover) {
     .lift:hover::before,
@@ -174,12 +174,11 @@
   }
 
   .mascot-react {
-    transform-box: fill-box;
     transform-origin: 50% 100%;
-    transition: transform 0.25s var(--ease-spring);
+    transition: scale 0.25s var(--ease-spring);
   }
   [data-mascot]:active .mascot-react {
-    transform: scale(1.06, 0.9);
+    scale: 1.06 0.9; /* scale (no transform) para sumarse al saludo en curso */
   }
 }
 
@@ -210,6 +209,7 @@
   #nav-mobile:not(:popover-open) {
     opacity: 0;
     translate: 0 -1rem;
+    transition-duration: 0.2s; /* cerrar es más rápido que abrir */
   }
   @starting-style {
     #nav-mobile:popover-open {
@@ -218,8 +218,8 @@
     }
   }
   #nav-mobile:popover-open li {
-    animation: rise 0.45s var(--ease-spring) both;
-    animation-delay: calc(0.08s + var(--i, 0) * 0.05s);
+    animation: rise 0.4s var(--ease-spring) both;
+    animation-delay: calc(0.05s + var(--i, 0) * 0.04s);
   }
 }
 
@@ -232,51 +232,47 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Hero: corre al primer render, sin esperar JS */
+  /* Hero: corre al primer render, sin esperar JS. Título y CTA legibles antes de ~0.9s; todo quieto a ~1.35s. */
   .hero-word {
     display: inline-block;
-    animation: word-in 0.8s var(--ease-spring) both;
-    animation-delay: calc(0.1s + var(--i) * 0.09s);
+    animation: word-in 0.65s var(--ease-spring) both;
+    animation-delay: calc(0.05s + var(--i) * 0.07s);
   }
   .hero-sub {
-    animation: rise 0.6s ease-out 0.6s both;
+    animation: rise 0.5s ease-out 0.3s both;
   }
   .hero-cta {
-    animation: rise 0.6s var(--ease-spring) 0.75s both;
+    animation: rise 0.5s var(--ease-spring) 0.4s both;
   }
   .hero-photo {
-    animation: photo-in 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both;
+    animation: photo-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   }
   .hero-float {
-    animation: float 6s ease-in-out 1.2s infinite;
+    animation: float 6s ease-in-out 0.8s infinite;
   }
   .hero-cookies {
-    animation: cookies-in 0.9s var(--ease-spring) 0.2s both;
+    animation: cookies-in 0.7s var(--ease-spring) 0.1s both;
   }
   .hero-mascot {
-    animation: mascot-in 0.9s var(--ease-spring) 0.5s both;
-  }
-  .hero-sticker {
-    animation: pop 0.6s var(--ease-spring) 0.6s both;
-  }
-  .hero .hand-note {
-    animation: note-in 0.7s var(--ease-spring) 0.8s both;
-  }
-  .hero .doodle-path {
-    animation: draw 0.8s ease-out both;
-    animation-delay: var(--dd, 0.9s);
+    animation: mascot-in 0.7s var(--ease-spring) 0.3s both;
   }
 
-  /* Mascota: parpadeo y saludo ocasional */
+  /* Mascota: parpadeo (capa de ojos) y saludo ocasional; ambos transforms del compositor */
   .mascot-eyes {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: blink 4.5s infinite;
+    animation: blink 4.6s infinite;
   }
-  .mascot-arm {
-    transform-box: fill-box;
-    transform-origin: 0% 100%;
-    animation: wave 6s ease-in-out 2s infinite;
+  .mascot-react {
+    animation: hello 7s ease-in-out 3s infinite;
+  }
+  .hero-sticker {
+    animation: pop 0.5s var(--ease-spring) 0.4s both;
+  }
+  .hero .hand-note {
+    animation: note-in 0.55s var(--ease-spring) 0.5s both;
+  }
+  .hero .doodle-path {
+    animation: draw 0.5s ease-out both;
+    animation-delay: var(--dd, 0.5s);
   }
 
   /* Reveal al entrar en pantalla */
@@ -291,23 +287,24 @@
     --r: -1.4deg;
   }
   [data-reveal='card'][data-inview] {
-    animation: reveal 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s) both;
+    animation: reveal 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s) both;
   }
+  /* Cascada tope en la fila 12: en tablas largas (Frías tiene 15) los precios no esperan de más */
   [data-inview] [data-row] {
-    animation: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-    animation-delay: calc(var(--d, 0s) + 0.15s + var(--i, 0) * 0.035s);
+    animation: rise 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: calc(var(--d, 0s) + 0.08s + min(var(--i, 0), 12) * 0.025s);
   }
   [data-inview] [data-pop] {
-    animation: pop 0.6s var(--ease-spring) calc(var(--d, 0s) + 0.35s) both;
+    animation: pop 0.5s var(--ease-spring) calc(var(--d, 0s) + 0.2s) both;
   }
   [data-inview] .hand-note {
-    animation: note-in 0.7s var(--ease-spring) calc(var(--d, 0s) + 0.5s) both;
+    animation: note-in 0.55s var(--ease-spring) calc(var(--d, 0s) + 0.3s) both;
   }
   [data-inview] .mascot-pop {
-    animation: mascot-in 0.8s var(--ease-spring) calc(var(--d, 0s) + 0.3s) both;
+    animation: mascot-in 0.65s var(--ease-spring) calc(var(--d, 0s) + 0.2s) both;
   }
   [data-inview] .doodle-path {
-    animation: draw 0.9s ease-out calc(var(--d, 0s) + 0.45s) both;
+    animation: draw 0.6s ease-out calc(var(--d, 0s) + 0.25s) both;
   }
 
   /* Loops (se pausan fuera de pantalla con data-paused) */
@@ -326,8 +323,33 @@
   }
   /* Solo los loops; las entradas de una sola vez siempre terminan */
   [data-paused]:is(.pin-bob, .sticker-wobble),
-  [data-paused] :is(.hero-float, .mascot-eyes, .mascot-arm, .burst-spin, .sticker-wobble, .marquee) {
+  [data-paused] :is(.hero-float, .burst-spin, .sticker-wobble, .marquee, .mascot-eyes, .mascot-react) {
     animation-play-state: paused !important;
+  }
+
+  /* Parallax ligado al scroll en el compositor, sin JS por frame (sin este soporte, providers.tsx usa GSAP).
+     Mismos rangos que tenía ScrollTrigger: ±--parallax% mientras el contenedor directo cruza la pantalla
+     ('top bottom' → 'bottom top'); en el hero, de 0 a --parallax% mientras sale por arriba ('top top' → 'bottom top').
+     inset 0: si no, el timeline hereda el scroll-padding-top del html. El contenedor no puede tener un ancestro
+     overflow: hidden (es scroll container y congela el timeline): por eso PriceCard usa overflow-clip. */
+  @supports (animation-timeline: view()) {
+    :has(> [data-parallax]) {
+      view-timeline: --parallax;
+      view-timeline-inset: 0;
+    }
+    [data-hero] {
+      view-timeline: --hero;
+      view-timeline-inset: 0;
+    }
+    [data-parallax] {
+      animation: parallax linear both;
+      animation-timeline: --parallax;
+    }
+    [data-hero] [data-parallax] {
+      animation-name: parallax-hero;
+      animation-timeline: --hero;
+      animation-range: exit-crossing;
+    }
   }
 }
 
@@ -434,35 +456,6 @@
     transform: rotate(-7deg) scale(0.97);
   }
 }
-@keyframes blink {
-  0%,
-  93%,
-  100% {
-    transform: scaleY(1);
-  }
-  96% {
-    transform: scaleY(0.12);
-  }
-}
-@keyframes wave {
-  0%,
-  62%,
-  100% {
-    transform: rotate(0);
-  }
-  68% {
-    transform: rotate(-22deg);
-  }
-  74% {
-    transform: rotate(12deg);
-  }
-  80% {
-    transform: rotate(-16deg);
-  }
-  86% {
-    transform: rotate(6deg);
-  }
-}
 @keyframes marquee {
   to {
     transform: translateX(-25%);
@@ -473,12 +466,52 @@
     transform: rotate(1turn);
   }
 }
+@keyframes blink {
+  0%,
+  93%,
+  100% {
+    transform: none;
+  }
+  96% {
+    transform: scaleY(0.15);
+  }
+}
+@keyframes hello {
+  0%,
+  82%,
+  94%,
+  100% {
+    transform: none;
+  }
+  85% {
+    transform: translateY(-5%) rotate(-3deg);
+  }
+  88% {
+    transform: rotate(2deg) scale(1.03, 0.97);
+  }
+  91% {
+    transform: translateY(-2%) rotate(-1deg);
+  }
+}
 @keyframes hop {
   30% {
     transform: translateY(-8%) rotate(-6deg);
   }
   60% {
     transform: translateY(0) rotate(4deg) scale(1.04, 0.96);
+  }
+}
+@keyframes parallax {
+  from {
+    translate: 0 calc(var(--parallax) * -1%);
+  }
+  to {
+    translate: 0 calc(var(--parallax) * 1%);
+  }
+}
+@keyframes parallax-hero {
+  to {
+    translate: 0 calc(var(--parallax) * 1%);
   }
 }
 @keyframes bob {

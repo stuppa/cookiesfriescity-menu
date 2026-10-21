@@ -36,21 +36,21 @@ export function Hero() {
                 </Fragment>
               ))}
               {l === words.length - 1 && (
-                <Doodle name="heart" className="ml-[0.15em] inline-block w-[0.5em] -translate-y-[0.35em]" strokeWidth={4} delay="1.1s" />
+                <Doodle name="heart" className="ml-[0.15em] inline-block w-[0.5em] -translate-y-[0.35em]" strokeWidth={4} delay="0.6s" />
               )}
             </span>
           ))}
-          <Doodle name="sparkle" className="absolute top-[-0.15em] right-[2%] w-[0.5em] text-coral lg:top-[0.05em] lg:right-[8%] lg:w-[0.45em]" strokeWidth={3.5} delay="1.2s" />
-          <Doodle name="slashes" className="absolute top-[0.45em] right-[0%] w-[0.38em] text-coral lg:right-[4%]" strokeWidth={3.5} delay="1.3s" />
+          <Doodle name="sparkle" className="absolute top-[-0.15em] right-[2%] w-[0.5em] text-coral lg:top-[0.05em] lg:right-[8%] lg:w-[0.45em]" strokeWidth={3.5} delay="0.65s" />
+          <Doodle name="slashes" className="absolute top-[0.45em] right-[0%] w-[0.38em] text-coral lg:right-[4%]" strokeWidth={3.5} delay="0.7s" />
         </h1>
 
         <p className="hero-sub mt-3 max-w-[15.5rem] text-[0.95rem] leading-snug text-ink-soft [grid-area:sub] max-lg:origin-left max-lg:-rotate-[5deg] max-lg:pl-6 lg:mt-6 lg:max-w-[24rem] lg:text-[1.2rem] lg:text-ink">
           Cookies, cafés, frappés y snacks en un solo lugar. Combina, disfruta, repite.
-          <Doodle name="heart" className="ml-1 inline-block w-3.5 -translate-y-px lg:hidden" strokeWidth={4} delay="1.2s" />
+          <Doodle name="heart" className="ml-1 inline-block w-3.5 -translate-y-px lg:hidden" strokeWidth={4} delay="0.65s" />
         </p>
 
         <div className="hero-cta relative mt-6 flex justify-center [grid-area:cta] lg:mt-8 lg:justify-start">
-          <Doodle name="slashes" className="absolute top-1 -left-10 hidden w-8 text-coral lg:block" strokeWidth={3.5} delay="1.4s" />
+          <Doodle name="slashes" className="absolute top-1 -left-10 hidden w-8 text-coral lg:block" strokeWidth={3.5} delay="0.75s" />
           <Button href="#menu">
             Ver <span className="hidden lg:inline">nuestro</span> menú
           </Button>
@@ -62,7 +62,7 @@ export function Hero() {
             y hero-galletas.webp (galletas con fondo transparente, mismo encuadre). */}
         <div className="hero-photo relative aspect-[1.28] overflow-hidden rounded-[1.75rem] md:aspect-[1.7] lg:aspect-[638/362] lg:rounded-l-[3.5rem] lg:rounded-r-none">
           <div className="hero-float absolute inset-[-4%]">
-            <div data-parallax="4" className="absolute inset-0">
+            <div data-parallax className="absolute inset-0 [--parallax:4]">
               <Image
                 src="/images/hero-bebidas.webp"
                 alt="Frappés de matcha, caramelo y fresa en vasos Cookie Fries"
@@ -73,7 +73,7 @@ export function Hero() {
                 className={photo}
               />
             </div>
-            <div data-parallax="-2" className="absolute inset-0">
+            <div data-parallax className="absolute inset-0 [--parallax:-2]">
               <div className="hero-cookies absolute inset-0">
                 <Image
                   src="/images/hero-galletas.webp"
@@ -89,9 +89,9 @@ export function Hero() {
           </div>
         </div>
 
-        <Doodle name="rays" className="absolute top-[11%] left-[16%] w-[6%] -rotate-[25deg] max-lg:hidden" delay="1.3s" />
-        <Doodle name="rays" className="absolute top-[1%] left-[52%] w-[6%] rotate-[8deg] max-lg:top-[-7%] max-lg:left-[40%] max-lg:w-[9%]" delay="1.4s" />
-        <Doodle name="dashes" className="absolute top-[68%] left-[3%] w-[4%] -scale-x-100 max-lg:hidden" delay="1.5s" />
+        <Doodle name="rays" className="absolute top-[11%] left-[16%] w-[6%] -rotate-[25deg] max-lg:hidden" delay="0.7s" />
+        <Doodle name="rays" className="absolute top-[1%] left-[52%] w-[6%] rotate-[8deg] max-lg:top-[-7%] max-lg:left-[40%] max-lg:w-[9%]" delay="0.75s" />
+        <Doodle name="dashes" className="absolute top-[68%] left-[3%] w-[4%] -scale-x-100 max-lg:hidden" delay="0.8s" />
 
         <HandNote className="top-[3%] left-[66%] hidden w-[26%] -rotate-[13deg] text-[clamp(1rem,1.55vw,1.5rem)] lg:block">
           El
@@ -99,9 +99,9 @@ export function Hero() {
           match
           <br />
           perfecto
-          <Doodle name="heart" className="ml-[0.2em] inline-block w-[0.8em]" strokeWidth={4} delay="1.5s" />
+          <Doodle name="heart" className="ml-[0.2em] inline-block w-[0.8em]" strokeWidth={4} delay="0.8s" />
         </HandNote>
-        <Doodle name="arrow" className="absolute top-[8%] left-[57%] hidden w-[8%] lg:block" delay="1.6s" />
+        <Doodle name="arrow" className="absolute top-[8%] left-[57%] hidden w-[8%] lg:block" delay="0.85s" />
 
         <span className="hero-sticker absolute top-[18%] left-[75%] hidden w-[26%] rotate-[10deg] lg:block">
           <Starburst lines={['Café', 'Galletas', 'Snacks', 'Y más']} className="sticker-wobble w-full" />
@@ -110,8 +110,8 @@ export function Hero() {
           <Starburst lines={['Un', 'match', 'perfecto']} heart size={14} className="sticker-wobble w-full" />
         </span>
 
-        <div data-parallax="-10" className="absolute right-[-4%] bottom-[-9%] w-[38%] md:w-[28%] lg:top-[47%] lg:right-auto lg:bottom-auto lg:left-[63%] lg:w-[33%]">
-          <Mascot className="hero-mascot w-full" />
+        <div data-parallax className="absolute right-[-5%] bottom-[-8%] w-[52%] md:w-[38%] lg:top-[49%] lg:right-auto lg:bottom-auto lg:left-[59%] lg:w-[41%] [--parallax:-10]">
+          <Mascot priority className="hero-mascot w-full" />
         </div>
       </div>
     </section>

@@ -26,7 +26,7 @@ export function PriceCard({ cat, className = '' }: { cat: Category; className?: 
       data-cat={cat.id}
       data-reveal="card"
       aria-labelledby={`${cat.id}-title`}
-      className={`@container grid grid-cols-[minmax(0,1fr)_31%] grid-rows-[auto_1fr] overflow-hidden rounded-card bg-paper shadow-[0_14px_30px_-22px_rgb(30_26_22/0.35)] ring-1 ring-ink/5 ${l.card ?? ''} ${className}`}
+      className={`@container grid grid-cols-[minmax(0,1fr)_31%] grid-rows-[auto_1fr] overflow-hidden rounded-card supports-[animation-timeline:view()]:overflow-clip bg-paper shadow-[0_14px_30px_-22px_rgb(30_26_22/0.35)] ring-1 ring-ink/5 ${l.card ?? ''} ${className}`}
     >
       <header
         className={`flex items-center gap-3 px-5 pt-5 pb-3 lg:items-start lg:justify-start lg:pt-6 lg:pl-6 ${l.compact ? '' : 'col-span-2 justify-between lg:col-span-1'}`}
@@ -60,7 +60,7 @@ export function PriceCard({ cat, className = '' }: { cat: Category; className?: 
           className={`relative col-start-2 mr-3 mb-3 lg:row-span-2 lg:row-start-1 lg:m-0 ${l.compact ? 'row-span-2 row-start-1 mt-3 lg:mt-0' : 'row-start-2'}`}
         >
           <div className={`absolute inset-x-0 bottom-0 overflow-hidden rounded-2xl lg:rounded-none ${l.photo ?? 'top-0'}`}>
-            <div data-parallax="6" className="absolute inset-x-0 -inset-y-[8%]">
+            <div data-parallax className="absolute inset-x-0 -inset-y-[8%] [--parallax:6]">
               {/* ⚑ Placeholder: reemplaza el archivo por la foto real */}
               <Image src={cat.photo.src} alt={cat.photo.alt} fill sizes="(min-width: 1024px) 14vw, (min-width: 768px) 18vw, 34vw" className="object-cover" />
             </div>
